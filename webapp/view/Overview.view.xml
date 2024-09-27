@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" controllerName="zninsurancecre.controller.Overview" displayBlock="true">
+  <Page title="{i18n>title} - {viewModel>/headerTitle}">
+    <headerContent>
+      <OverflowToolbarButton type="Transparent" icon="sap-icon://building" iconFirst="true" width="auto" enabled="true" visible="true" press="_onSelectOrganization" tooltip="{i18n>tooltipSelectOrganization}" />
+    </headerContent>
+    <content>
+      <l:Splitter width="{viewModel>/mainSplitterWidth}" id="mainSplitter">
+        <l:contentAreas>
+          <l:HorizontalLayout>
+            <Table width="98%" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="false" class="sapUiSmallMarginBeginEnd" items="{insurancePlanTableModel>/}" visible="{= ${viewModel>/isInstituteSelected} === true ? ${viewModel>/isInsuranceApp} === true  ? true : false : false}">
+              <!-- visible="{viewModel>/isInstituteSelected}"> -->
+              <layoutData>
+                <l:SplitterLayoutData size="{viewModel>/tableContentWidth}" />
+              </layoutData>
+              <headerToolbar>
+                <OverflowToolbar>
+                  <content>
+                    <SearchField placeholder="{i18n>placeHolderSearch}" showSearchButton="true" visible="true" width="85%" liveChange="_onSearchInsurance" search="_onSearchInsuranceButton" />
+                    <OverflowToolbarButton type="Emphasized" icon="sap-icon://synchronize" iconFirst="true" width="auto" enabled="true" visible="true" press="_onRefreshData" tooltip="{i18n>toolTipRefresh}" />
+                    <Button type="Emphasized" icon="sap-icon://switch-views" iconFirst="true" width="auto" enabled="true" visible="true" press="_onSwitchApplication" tooltip="{i18n>toolTipRefresh}" text="{= ${viewModel>/isInsuranceApp} === true  ? ${i18n>lblGoToTemplate} : ${i18n>lblGoToInsurance} }" />
+                  </content>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblTabInsuranceNumber}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblTabInsuranceName}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblInsuranceType}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblTabCreatedBy}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblTabCreationDate}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press="_onViewInsuranceDetails" class="myShiftRow" vAlign="Middle">
+                  <cells>
+                    <ObjectAttribute text="{insurancePlanTableModel>insuranceNumber}" active="true" press="_onViewInsuranceDetails" />
+                    <Text text="{insurancePlanTableModel>insuranceProviderName}" />
+                    <Text text="{insurancePlanTableModel>insuranceType}" />
+                    <Text text="{insurancePlanTableModel>createdBy}" />
+                    <Text text="{insurancePlanTableModel>createdAt}" />
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+            <Table width="98%" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="false" class="sapUiSmallMarginBeginEnd" items="{insuranceTemplateTableModel>/}" visible="{= ${viewModel>/isInstituteSelected} === true ? ${viewModel>/isTemplateApp} === true  ? true : false : false}">
+              <layoutData>
+                <l:SplitterLayoutData size="{viewModel>/tableContentWidth}" />
+              </layoutData>
+              <headerToolbar>
+                <OverflowToolbar>
+                  <content>
+                    <SearchField placeholder="{i18n>placeHolderSearch}" showSearchButton="true" visible="true" width="85%" liveChange="_onSearchTemplate" search="_onSearchTemplateButton" />
+                    <OverflowToolbarButton type="Emphasized" icon="sap-icon://add" iconFirst="true" width="auto" enabled="true"  visible="{= ${viewModel>/isInstituteSelected} === true ? ${viewModel>/isTemplateApp} === true  ? true : false : false}"
+ press="_onCreateTemplate" tooltip="{i18n>toolTipRefresh}"></OverflowToolbarButton>
+                    <Button type="Emphasized" icon="sap-icon://switch-views" iconFirst="true" width="auto" enabled="true" visible="true" press="_onSwitchApplication" tooltip="{i18n>toolTipRefresh}" text="{= ${viewModel>/isInsuranceApp} === true  ? ${i18n>lblGoToTemplate} : ${i18n>lblGoToInsurance} }" />
+                  </content>
+                </OverflowToolbar>
+              </headerToolbar>
+              <columns>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblTabTemplateId}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblTabTemplateName}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblTabCreatedBy}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+                <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+                  <header>
+                    <Text text="{i18n>lblTabCreationDate}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true" class="tableHeader" />
+                  </header>
+                  <footer />
+                </Column>
+              </columns>
+              <items>
+                <ColumnListItem type="Navigation" press="_onViewTemplateDetails" class="myShiftRow" vAlign="Middle">
+                  <cells>
+                    <ObjectAttribute text="{insuranceTemplateTableModel>templateId}" active="true" press="_onViewTemplateDetails" />
+                    <Text text="{insuranceTemplateTableModel>templateDescription}" />
+                    <Text text="{insuranceTemplateTableModel>createdBy}" />
+                    <Text text="{insuranceTemplateTableModel>createdAt}" />
+                  </cells>
+                </ColumnListItem>
+              </items>
+            </Table>
+          </l:HorizontalLayout>
+        </l:contentAreas>
+      </l:Splitter>
+    </content>
+  </Page>
+</mvc:View>

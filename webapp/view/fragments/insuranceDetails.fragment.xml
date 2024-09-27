@@ -1,0 +1,160 @@
+<core:FragmentDefinition
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:sap.me="sap.me"
+	xmlns:sap.ui.layout="sap.ui.layout"
+	xmlns="sap.m"
+	xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:c="sap.suite.ui.microchart"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:rte="sap.ui.richtexteditor"
+	xmlns:commons="sap.ui.commons"
+	xmlns:layout="sap.ui.layout"
+	xmlns:commonssuite="sap.suite.ui.commons"
+	xmlns:uxap="sap.uxap">
+	<ObjectHeader responsive="true"
+					  fullScreenOptimized="false"
+					  intro="{insuranceDetailHeaderModel>/insuranceNumber}"
+					  title="{insuranceDetailHeaderModel>/insuranceName}">
+		<statuses>
+			<ObjectStatus class="myObjectStatus" active="true" text="{i18n>lblButtonAddNewPlan}" press="_onAddNewPlan" inverted="true" state="Information"
+			visible="{= ${viewModel>/isNewPlanCreate} === false}"></ObjectStatus>
+			<ObjectStatus class="myObjectStatus" active="true" text="{i18n>lblButtonTemplateManagement}" press="_onNavigateTemplate" inverted="true" state="Warning"
+			visible="{= ${viewModel>/isNewPlanCreate} === false}"></ObjectStatus>
+		</statuses>
+		<!-- <markers><ObjectMarker type="Favorite"/></markers> -->
+		<headerContainer>
+			<IconTabBar		
+							expandable="false"
+							expanded="{device>/isNoPhone}"
+							class="sapUiResponsiveContentPadding" 
+							items="{insuranceDetailModel>/}"
+							selectedKey="{viewModel>/tabSelectedKey}">
+				<items>
+					<IconTabFilter text="{insuranceDetailModel>PlanDesc}" key="{insuranceDetailModel>PlanId}">
+						<content>
+							<uxap:ObjectPageLayout subSectionLayout="TitleOnLeft" 
+											   showTitleInHeaderContent="true" 
+											   height="100%"
+											   upperCaseAnchorBar="false" 
+											   showFooter="true" 
+											   headerContentPinned="true">
+								<uxap:headerTitle>
+									<uxap:ObjectPageDynamicHeaderTitle>
+										<uxap:expandedHeading>
+											<Title text="{insuranceDetailModel>PlanDesc} - {insuranceDetailModel>PlanId}" wrapping="true"/>
+										</uxap:expandedHeading>
+										<uxap:snappedHeading>
+											<FlexBox fitContainer="true" alignItems="Center">
+												<Title text="{insuranceDetailModel>PlanDesc} - {insuranceDetailModel>PlanId}" wrapping="true"/>
+											</FlexBox>
+										</uxap:snappedHeading>
+										<uxap:actions>
+											<!--Document Status-->
+											<Button type="Emphasized" icon="sap-icon://edit" iconFirst="true" enabled="{insuranceDetailModel>Edit_ac}" press="_onToggleEdit" 
+										visible="{= ${insuranceDetailModel>planKey} === ${insuranceDetailModel>isHighestVersion} ? ${insuranceDetailModel>isEdit} === false  ? true : false : false}"/>
+											<!-- visible="{= ${insuranceDetailModel>isEdit} === false}"/> -->
+											<Button type="Emphasized" icon="sap-icon://display" iconFirst="true" enabled="{insuranceDetailModel>Edit_ac}" press="_onToggleEdit" 
+													visible="{= ${insuranceDetailModel>isEdit} === true}"/>
+											<!-- <Button text="{i18n>lblNewVersion}" type="Emphasized" icon="sap-icon://add" iconFirst="true" press="_onCreateNewVersion" visible="{= ${insuranceDetailModel>isEdit} === false}"/> -->
+											<Button text="{i18n>lblNewVersion}" type="Emphasized" icon="sap-icon://add" iconFirst="true" press="_onCreateNewVersion" visible="{= ${insuranceDetailModel>planKey} === ${insuranceDetailModel>isHighestVersion} ? ${insuranceDetailModel>isEdit} === false  ? true : false : false}"/>
+											<Button text="{i18n>lblCancelPlan}" type="Negative" icon="sap-icon://delete" iconFirst="true" press="_onDeleteItemVersion" visible="{= ${insuranceDetailModel>isNewVersion} === true  ? false : true }"/>
+											<Button text="{i18n>lblUpdate}" type="Emphasized" icon="sap-icon://save" iconFirst="true" press="_onUpdateRecord" visible="{= ${insuranceDetailModel>isEdit} === true}"/>
+										</uxap:actions>
+									</uxap:ObjectPageDynamicHeaderTitle>
+								</uxap:headerTitle>
+								<uxap:headerContent>
+									<form:Form>
+										<f:layout>
+											<f:ResponsiveGridLayout
+													labelSpanXL="2"
+													labelSpanL="2"
+													labelSpanM="2"
+													labelSpanS="12"
+													adjustLabelSpan="false"
+													emptySpanXL="0"
+													emptySpanL="0"
+													emptySpanM="0"
+													emptySpanS="0"
+													columnsXL="1"
+													columnsL="1"
+													columnsM="1"
+													singleContainerFullSize="true" />
+										</f:layout>
+										<f:formContainers>
+											<f:FormContainer>
+												<f:formElements>
+													<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+														<form:label>
+															<Label text="{i18n>lblPlanId}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"
+															wrapping="true" class="blackLabel sapUiSmallMarginEnd sapUiTinyMarginTopBottom"/>
+														</form:label>
+														<f:fields>
+															<Input value="{insuranceDetailModel>PlanId}" editable="{insuranceDetailModel>isNewPlan}"></Input>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+														<form:label>
+															<Label text="{i18n>lblPlanDescription}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"
+															wrapping="true" class="blackLabel sapUiSmallMarginEnd sapUiTinyMarginTopBottom"/>
+														</form:label>
+														<f:fields>
+															<Input value="{insuranceDetailModel>PlanDesc}" editable="{= ${insuranceDetailModel>isEdit} === true}"></Input>
+														</f:fields>
+													</f:FormElement>
+													<f:FormElement class="sapUiMarginTopBottom">
+														<form:label>
+															<Label text="{i18n>lblPlanVersion}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"
+															wrapping="true" class="blackLabel sapUiSmallMarginEnd"/>
+														</form:label>
+														<f:fields>
+															<Select visible="{= ${insuranceDetailModel>isMultiVersion} === true}" width="auto" maxWidth="100%"
+																items="{insuranceDetailModel>planVersions}" selectedKey="{insuranceDetailModel>planKey}" class="myCustomSelect"
+																showSecondaryValues="true" change="_onPlanVersionChange">
+																<items>
+																	<core:ListItem text="{insuranceDetailModel>PlanVersion}" key="{insuranceDetailModel>PlanVersion}"
+																					additionalText="{insuranceDetailModel>PlanVersion}"/>
+																</items>
+															</Select>
+															<Title text="{insuranceDetailModel>planDetails/0/PlanVersion}" visible="{= ${insuranceDetailModel>isMultiVersion} === false}"></Title>
+														</f:fields>
+													</f:FormElement>
+												</f:formElements>
+											</f:FormContainer>
+										</f:formContainers>
+									</form:Form>
+								</uxap:headerContent>
+								<uxap:sections>
+									<uxap:ObjectPageSection titleUppercase="false" title="{i18n>lblSectionHeader}">
+										<uxap:subSections>
+											<uxap:ObjectPageSubSection>
+												<uxap:blocks>
+													<core:Fragment fragmentName="zninsurancecre.view.fragments.insuranceHeader" type="XML"></core:Fragment>
+												</uxap:blocks>
+											</uxap:ObjectPageSubSection>
+										</uxap:subSections>
+									</uxap:ObjectPageSection>
+									<uxap:ObjectPageSection titleUppercase="false" title="{i18n>lblSectionItem}">
+										<uxap:subSections>
+											<uxap:ObjectPageSubSection>
+												<uxap:blocks>
+													<core:Fragment fragmentName="zninsurancecre.view.fragments.insuranceItem" type="XML"></core:Fragment>
+												</uxap:blocks>
+											</uxap:ObjectPageSubSection>
+										</uxap:subSections>
+									</uxap:ObjectPageSection>
+								</uxap:sections>
+							</uxap:ObjectPageLayout>
+						</content>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</headerContainer>
+	</ObjectHeader>
+</core:FragmentDefinition>

@@ -1,0 +1,35 @@
+<core:FragmentDefinition xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.ui.layout.form" xmlns:sap.me="sap.me" xmlns:sap.ui.layout="sap.ui.layout" xmlns="sap.m" xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data" xmlns:c="sap.suite.ui.microchart"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds" xmlns:rte="sap.ui.richtexteditor"
+	xmlns:commons="sap.ui.commons" xmlns:layout="sap.ui.layout" xmlns:commonssuite="sap.suite.ui.commons">
+	<Dialog title="{i18n>lblItemTemplate}" contentWidth="60%">
+        <Table mode="None" items="{itemTemplateModel>/}">
+            <columns>
+                <Column width="10%">
+                    <Text text=""></Text>
+                </Column>
+                <Column width="30%">
+                    <Text text="{i18n>lblTemplateId}"></Text>
+                </Column>
+                <Column width="60%">
+                    <Text text="{i18n>lblTemplateDescription}"></Text>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem vAlign="Middle">
+                    <cells>
+                        <CheckBox selected="{itemTemplateModel>isTemplateSelected}"></CheckBox>
+                        <Text text="{itemTemplateModel>templateId}"></Text>
+                        <Text text="{itemTemplateModel>templateDescription}"></Text>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <buttons>
+            <Button text="{i18n>lblButtonOk}" press="_onSelectTemplates" type="Emphasized"></Button>
+            <Button text="{i18n>Cancel}" press="_onCancelDialog" type="Reject"></Button>
+        </buttons>
+        
+    </Dialog>
+</core:FragmentDefinition>

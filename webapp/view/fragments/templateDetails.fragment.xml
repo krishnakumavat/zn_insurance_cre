@@ -1,0 +1,125 @@
+<core:FragmentDefinition
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:sap.me="sap.me"
+	xmlns:sap.ui.layout="sap.ui.layout"
+	xmlns="sap.m"
+	xmlns:viz="sap.viz.ui5.controls"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:viz.data="sap.viz.ui5.data"
+	xmlns:c="sap.suite.ui.microchart"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:rte="sap.ui.richtexteditor"
+	xmlns:commons="sap.ui.commons"
+	xmlns:layout="sap.ui.layout"
+	xmlns:commonssuite="sap.suite.ui.commons"
+	xmlns:uxap="sap.uxap">
+	<uxap:ObjectPageLayout subSectionLayout="TitleOnLeft" 
+						   showTitleInHeaderContent="true" 
+							height="100%"
+							upperCaseAnchorBar="false" 
+							showFooter="true" 
+							headerContentPinned="true">
+	
+		<uxap:headerTitle>
+			<uxap:ObjectPageDynamicHeaderTitle>
+				<uxap:expandedHeading>
+					<Title text="{insuranceTemplateModel>/templateDescription} - {insuranceTemplateModel>/templateId}" wrapping="true"/>
+				</uxap:expandedHeading>
+				<uxap:snappedHeading>
+					<FlexBox fitContainer="true" alignItems="Center">
+						<Title text="{insuranceTemplateModel>/templateDescription} - {insuranceTemplateModel>/templateId}" wrapping="true"/>
+					</FlexBox>
+				</uxap:snappedHeading>
+				<uxap:actions>
+					<Button type="Emphasized" icon="sap-icon://edit" iconFirst="true" enabled="{insuranceTemplateModel>Edit_ac}" press="_onToggleEditTemplate" 
+							visible="{= ${insuranceTemplateModel>/isEdit} === false}"/>
+					<Button type="Emphasized" icon="sap-icon://display" iconFirst="true" enabled="{insuranceTemplateModel>Edit_ac}" press="_onToggleEditTemplate" 
+							visible="{= ${insuranceTemplateModel>/isEdit} === true}"/>
+					<Button text="{i18n>lblCancelTemplate}" type="Negative" icon="sap-icon://delete" iconFirst="true" press="_onDeleteTemplateVersion"/>
+					<Button text="{i18n>lblUpdate}" type="Emphasized" icon="sap-icon://save" iconFirst="true" press="_onUpdateTemplate" visible="{= ${insuranceTemplateModel>/isEdit} === true}"/>
+					<Button type="Transparent" icon="sap-icon://decline" iconFirst="true" press="_onCloseDetails"/>
+				</uxap:actions>
+			</uxap:ObjectPageDynamicHeaderTitle>
+		</uxap:headerTitle>	
+		<uxap:headerContent>
+			<form:Form>
+				<f:layout>
+					<f:ResponsiveGridLayout
+						labelSpanXL="2"
+													labelSpanL="2"
+													labelSpanM="2"
+													labelSpanS="12"
+													adjustLabelSpan="false"
+													emptySpanXL="0"
+													emptySpanL="0"
+													emptySpanM="0"
+													emptySpanS="0"
+													columnsXL="1"
+													columnsL="1"
+													columnsM="1"
+													singleContainerFullSize="true" />
+									</f:layout>
+									<f:formContainers>
+										<f:FormContainer>
+											<f:formElements>
+												<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceTemplateModel>/isEdit} === false}">
+													<form:label>
+														<Label text="{i18n>lblTemplateId}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+															wrapping="true" class="blackLabel"/>
+													</form:label>
+													<f:fields>
+														<Text text="{insuranceTemplateModel>/PlanTplId}"></Text>
+													</f:fields>
+												</f:FormElement>
+												<f:FormElement class="sapUiMarginTopBottom"  visible="{= ${insuranceTemplateModel>/isEdit} === true}">
+													<form:label>
+														<Label text="{i18n>lblTemplateId}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"
+															wrapping="true" class="blackLabel sapUiSmallMarginEnd sapUiTinyMarginTopBottom"/>
+													</form:label>
+													<f:fields>
+														<Input value="{insuranceTemplateModel>/PlanTplId}" editable="{= ${insuranceTemplateModel>/isEdit} === true}"></Input>
+													</f:fields>
+												</f:FormElement>
+
+
+												<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceTemplateModel>/isEdit} === false}">
+													<form:label>
+														<Label text="{i18n>lblTemplateDescription}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+															wrapping="true" class="blackLabel"/>
+													</form:label>
+													<f:fields>
+														<Text text="{insuranceTemplateModel>/Description}"></Text>
+													</f:fields>
+												</f:FormElement>												
+												<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceTemplateModel>/isEdit} === true}">
+													<form:label>
+														<Label text="{i18n>lblTemplateDescription}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"
+															wrapping="true" class="blackLabel sapUiSmallMarginEnd sapUiTinyMarginTopBottom"/>
+													</form:label>
+													<f:fields>
+														<Input value="{insuranceTemplateModel>/Description}" editable="{= ${insuranceTemplateModel>/isEdit} === true}"></Input>
+													</f:fields>
+												</f:FormElement>
+											</f:formElements>
+										</f:FormContainer>
+									</f:formContainers>
+								</form:Form>
+							</uxap:headerContent>	
+							<uxap:sections>
+								<uxap:ObjectPageSection titleUppercase="false" title="{i18n>lblSectionHeader}">
+									<uxap:subSections>
+										<uxap:ObjectPageSubSection>
+											<uxap:blocks>
+												<core:Fragment fragmentName="zninsurancecre.view.fragments.templateItem" type="XML"></core:Fragment>
+											</uxap:blocks>
+										</uxap:ObjectPageSubSection>
+									</uxap:subSections>
+								</uxap:ObjectPageSection>
+							</uxap:sections>
+     </uxap:ObjectPageLayout>	
+</core:FragmentDefinition>

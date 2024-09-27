@@ -1,0 +1,416 @@
+<core:FragmentDefinition
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:l="sap.ui.layout"
+	xmlns:smartForm="sap.ui.comp.smartform"
+	xmlns:table="sap.ui.table"
+	xmlns:smartField="sap.ui.comp.smartfield">
+	<form:Form>
+		<f:toolbar>
+			<OverflowToolbar>
+				<Text text="{insuranceDetailModel>Description}"></Text>
+				<ToolbarSpacer/>
+				<Button type="Emphasized" icon="sap-icon://edit" iconFirst="true"  press="_onToggleEditItem" 
+				visible="{= ${insuranceDetailModel>isEdit} === false}"/>
+				<Button type="Emphasized" icon="sap-icon://display" iconFirst="true" press="_onToggleEditItem" 
+				visible="{= ${insuranceDetailModel>isEdit} === true}"/>
+				<Button type="Emphasized" icon="sap-icon://delete" iconFirst="true"  press="_onDeleteEditItem" 
+				visible="{= ${insuranceDetailModel>isEdit} === false}"/>
+				<!-- <Button type="Emphasized" icon="sap-icon://save" iconFirst="true" press="_onSaveEditItem" 
+				visible="{= ${insuranceDetailModel>isEdit} === true}" text="{i18n>lblButtonSave}"/> -->
+			</OverflowToolbar>	
+		</f:toolbar>
+		<f:title>
+			<core:Title text="{insuranceDetailModel>Description}" />
+		</f:title>
+		<f:layout>
+			<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="0"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="3"
+					columnsL="3"
+					columnsM="3"
+					singleContainerFullSize="false" />
+		</f:layout>
+		<f:formContainers>
+			<!--Container 1-->
+			<f:FormContainer title="{i18n>lblSectionCoverage}">
+				<f:formElements>
+					<!--Criteria Start-->
+					<!--To show in display mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblCriteria}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>to_PlanCoverage/CritText}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<!--To show in Edit mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblCriteria}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel sapUiTinyMarginTop"/>
+						</form:label>
+						<f:fields>
+							<Select visible="true" width="auto" maxWidth="100%"
+									items="{insuranceCriteriaModel>/}" selectedKey="{insuranceDetailModel>to_PlanCoverage/Crit}" class="myCustomSelect"
+									enabled="{createCatalogItemModel>/isNewArticle}" showSecondaryValues="true">
+								<items>
+									<core:ListItem text="{insuranceCriteriaModel>description}" key="{insuranceCriteriaModel>code}"
+														additionalText="{insuranceCriteriaModel>code}"/>
+								</items>
+							</Select>
+						</f:fields>
+					</f:FormElement>
+					<!--Criteria Start-->
+
+					<!--Case Type Start-->
+					<!--To show in display mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblCaseType}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit"
+								visible="true" wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>to_PlanCoverage/CaseTypeText}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<!--To show in Edit mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblCaseType}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit"
+								visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop"/>
+						</form:label>
+						<f:fields>
+							<Select visible="true" width="auto" maxWidth="100%"
+									items="{insuranceCaseTypeModel>/}" selectedKey="{insuranceDetailModel>to_PlanCoverage/CaseType}" class="myCustomSelect"
+									enabled="{createCatalogItemModel>/isNewArticle}" showSecondaryValues="true">
+								<items>
+									<core:ListItem text="{insuranceCaseTypeModel>description}" key="{insuranceCaseTypeModel>code}"
+														additionalText="{insuranceCaseTypeModel>code}"/>
+								</items>
+							</Select>
+						</f:fields>
+					</f:FormElement>
+					<!--Case Type End-->
+
+					<!--Value Start-->
+					<!--To show in display mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblValue}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>to_PlanCoverage/Val}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<!--To show in Edit mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblValue}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel sapUiTinyMarginTop"/>
+						</form:label>
+						<f:fields>
+							<Input value="{insuranceDetailModel>to_PlanCoverage/Val}"></Input>
+						</f:fields>
+					</f:FormElement>
+					
+					<!--Coverage Start-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblCoverage}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>to_PlanCoverage/Coverage} %"></Text>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblCoverage}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabe sapUiTinyMarginTopl"/>
+						</form:label>
+						<f:fields>
+							<HBox>
+								<items>
+									<Input type="Number" value="{insuranceDetailModel>to_PlanCoverage/Coverage}"></Input>
+									<Text text="%"></Text>
+								</items>
+							</HBox>
+							
+						</f:fields>
+					</f:FormElement>
+					<!--Coverage End-->
+				</f:formElements>
+			</f:FormContainer>
+			<!--Container 2-->
+			<f:FormContainer title="{i18n>lblSectionLimits}">
+				<form:formElements>
+					<!--Amount Start-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblAmount}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>to_PlanLimits/LimitCurr}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblAmount}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel sapUiTinyMarginTop"/>
+						</form:label>
+						<f:fields>
+							<HBox>
+								<items>
+									<Input type="Number" value="{insuranceDetailModel>to_PlanLimits/LimitCurr}"></Input>
+									<Select visible="true" width="auto" maxWidth="100%" items="{insuranceCurrencyModel&gt;/}" selectedKey="{insuranceDetailModel>to_PlanLimits/LimitCuky}" class="myCustomSelect" showSecondaryValues="true">
+										<items>
+										  <core:ListItem text="{insuranceCurrencyModel&gt;description}" key="{insuranceCurrencyModel&gt;code}" additionalText="{insuranceCurrencyModel&gt;code}" />
+										</items>
+									  </Select>
+								</items>
+							</HBox>
+							
+						</f:fields>
+					</f:FormElement>
+					<!--Amount End-->
+
+					<!--Quantity Start-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblQuantity}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>to_PlanLimits/LimitQuan}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblQuantity}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel sapUiTinyMarginTop"/>
+						</form:label>
+						<f:fields>
+							<HBox>
+								<items>
+									<Input value="{insuranceDetailModel>to_PlanLimits/LimitQuan}"></Input>
+									<Select visible="true" width="auto" maxWidth="100%" items="{insuranceUOMModel&gt;/}" selectedKey="{insuranceDetailModel>to_PlanLimits/LimitUnit}" class="myCustomSelect" showSecondaryValues="true">
+										<items>
+										  <core:ListItem text="{insuranceUOMModel&gt;description}" key="{insuranceUOMModel&gt;code}" additionalText="{insuranceUOMModel&gt;code}" />
+										</items>
+									  </Select>
+								</items>
+							</HBox>
+							
+						</f:fields>
+					</f:FormElement>
+					<!--Quantity End-->
+
+					<!--Cycle Duration Start-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblCycleDuration}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit"
+								visible="true" wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>to_PlanLimits/CycleDur} {insuranceDetailModel>to_PlanLimits/CycleDurTypeText}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<!--Cycle Duration End-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblCycleDurationType}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel sapUiTinyMarginTop"/>
+						</form:label>
+						<f:fields>
+							<HBox>
+								<items>
+									<Input value="{insuranceDetailModel>to_PlanLimits/CycleDur}" type="Number"></Input>
+									<Select visible="true" width="auto" maxWidth="100%"
+									items="{insuranceCycleDurationModel>/}" selectedKey="{insuranceDetailModel>to_PlanLimits/CycleDurType}" class="myCustomSelect"
+									enabled="{createCatalogItemModel>/isNewArticle}" showSecondaryValues="true">
+								<items>
+									<core:ListItem text="{insuranceCycleDurationModel>description}" key="{insuranceCycleDurationModel>code}"
+														additionalText="{insuranceCycleDurationModel>code}"/>
+								</items>
+							</Select>
+								</items>
+							</HBox>
+							
+						</f:fields>
+					</f:FormElement>
+				</form:formElements>
+			</f:FormContainer>
+			<!--Container 3-->
+			<f:FormContainer title="{i18n>lblSectionCoPayment}">
+				<form:formElements>
+
+					<!--Co Pay Amount  Start-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblAmount}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>to_PlanCopay/Copay} {insuranceDetailModel>to_PlanCopay/CopayCurr}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblAmount}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel sapUiTinyMarginTop"/>
+						</form:label>
+						<f:fields>
+							<HBox>
+								<items>
+									<Input value="{insuranceDetailModel>to_PlanCopay/Copay}" type="Number"></Input>
+									<Input value="{insuranceDetailModel>to_PlanCopay/CopayCurr}" type="Text" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="_onCurrencyValueHelpItem"></Input>
+								</items>
+							</HBox>
+						</f:fields>
+					</f:FormElement>
+				</form:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</form:Form>
+	<form:Form>
+		<f:title>
+			<core:Title text="{i18n>lblSectionConfiguration}" />
+		</f:title>	
+		<f:layout>
+			<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="0"
+					emptySpanL="0"
+					emptySpanM="0"
+					emptySpanS="0"
+					columnsXL="1"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" />
+		</f:layout>
+		<f:formContainers>
+			<f:FormContainer>
+				<f:formElements>
+					<f:FormElement>
+						<table:Table selectionMode="None" showColumnVisibilityMenu="false" rows="{insuranceDetailModel>planItemsDetailConfiguration}" fixedColumnCount="2" 
+						rowActionCount="{=${insuranceDetailModel>isEdit} === true ? 1 : 1}" visibleRowCount="{insuranceDetailModel>visibleRowCount}" id="detailConfigurationTable">
+							<table:extension>
+								<OverflowToolbar class="Clear">
+									<ToolbarSpacer width=""/>
+									<OverflowToolbarButton tooltip="Add New" type="Transparent" text="Add New"
+										icon="sap-icon://add" press="_onAddDetailConfiguration" visible="{=${insuranceDetailModel>isEdit} === true ? true : false}"/>
+								</OverflowToolbar>	
+							</table:extension>
+							<table:columns>
+								<table:Column width="7rem">
+									<Label text="{i18n>lblCriteria}" design="Bold"/>
+									<table:template>
+										<Select visible="true" width="auto" maxWidth="100%"
+											items="{insuranceCriteriaModel>/}" selectedKey="{insuranceDetailModel>detailConfigCriteriaKey}" class="myCustomSelect"
+											showSecondaryValues="true" enabled="{=${viewModel>/isItemEdit} === true ? true : false}">
+											<items>
+												<core:ListItem text="{insuranceCriteriaModel>description}" key="{insuranceCriteriaModel>code}"
+														additionalText="{insuranceCriteriaModel>code}"/>
+											</items>
+										</Select>
+									</table:template>
+								</table:Column>
+								<table:Column width="10rem">
+									<Label text="{i18n>lblValue}" design="Bold"/>
+									<table:template>
+										<Input value="{insuranceDetailModel>detailConfigValue}" type="Text" editable="{=${viewModel>/isItemEdit} === true ? true : false}"></Input>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem">
+									<Label text="{i18n>lblQuantity}" design="Bold"/>
+									<table:template>
+										<Input value="{insuranceDetailModel>detailConfigQuantity}" type="Number" editable="{=${viewModel>/isItemEdit} === true ? true : false}"></Input>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem">
+									<Label text="{i18n>lblUnit}" design="Bold"/>
+									<table:template>
+										<Select visible="true" width="auto" maxWidth="100%"
+											items="{insuranceUOMModel>/}" selectedKey="{insuranceDetailModel>detailConfigUnit}" class="myCustomSelect"
+											showSecondaryValues="true" enabled="{=${viewModel>/isItemEdit} === true ? true : false}">
+											<items>
+												<core:ListItem text="{insuranceUOMModel>description}" key="{insuranceUOMModel>code}"
+														additionalText="{insuranceUOMModel>code}"/>
+											</items>
+										</Select>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem">
+									<Label text="{i18n>lblAmount}" design="Bold"/>
+									<table:template>
+										<Input value="{insuranceDetailModel>detailConfigAmount}" type="Number" editable="{=${viewModel>/isItemEdit} === true ? true : false}"></Input>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem">
+									<Label text="{i18n>lblCurrency}" design="Bold"/>
+									<table:template>
+										<Select visible="true" width="auto" maxWidth="100%"
+											items="{insuranceCurrencyModel>/}" selectedKey="{insuranceDetailModel>detailConfigCurrency}" class="myCustomSelect"
+											showSecondaryValues="true" enabled="{=${viewModel>/isItemEdit} === true ? true : false}">
+											<items>
+												<core:ListItem text="{insuranceCurrencyModel>description}" key="{insuranceCurrencyModel>code}"
+														additionalText="{insuranceCurrencyModel>code}"/>
+											</items>
+										</Select>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem">
+									<Label text="{i18n>lblCycle}" design="Bold"/>
+									<table:template>
+										<Input value="{insuranceDetailModel>detailConfigCycleDuration}" type="Number" editable="{=${viewModel>/isItemEdit} === true ? true : false}"></Input>
+									</table:template>
+								</table:Column>
+								<table:Column width="7rem">
+									<Label text="{i18n>lblCycleDuration}" design="Bold"/>
+									<table:template>
+										<Select visible="true" width="auto" maxWidth="100%"
+											items="{insuranceCycleDurationModel>/}" selectedKey="{insuranceDetailModel>detailConfigCycleDurationType}" class="myCustomSelect"
+											showSecondaryValues="true" enabled="{=${viewModel>/isItemEdit} === true ? true : false}">
+											<items>
+												<core:ListItem text="{insuranceCycleDurationModel>description}" key="{insuranceCycleDurationModel>code}"
+														additionalText="{insuranceCycleDurationModel>code}"/>
+											</items>
+										</Select>
+									</table:template>
+								</table:Column>
+							</table:columns>
+							<table:rowActionTemplate>
+								<table:RowAction visible="{=${viewModel>/isItemEdit} === true ? true : false}">
+									<table:items>
+										<table:RowActionItem type="Delete" press="_onDeleteDetailConfig" text="Delete" icon="sap-icon://delete" ></table:RowActionItem>
+									</table:items>
+								</table:RowAction>
+							</table:rowActionTemplate>
+						</table:Table>
+					</f:FormElement>
+				</f:formElements>
+			</f:FormContainer>
+		</f:formContainers>
+	</form:Form>
+
+</core:FragmentDefinition>

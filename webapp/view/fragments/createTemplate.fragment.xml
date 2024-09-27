@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:c="sap.suite.ui.microchart" xmlns:commons="sap.ui.commons" xmlns:f="sap.ui.layout.form" xmlns:form="sap.ui.layout.form" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:l="sap.ui.layout" xmlns:layout="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:rte="sap.ui.richtexteditor" xmlns:sap.me="sap.me" xmlns:sap.ui.layout="sap.ui.layout" xmlns:table="sap.ui.table" xmlns:viz="sap.viz.ui5.controls" xmlns:viz.data="sap.viz.ui5.data" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:vizFeeds="sap.viz.ui5.controls.common.feeds">
+  <Dialog title="{i18n&gt;lblCreateTemplate}" contentWidth="100%" contentHeight="100%">
+    <content>
+      <form:Form>
+        <f:layout>
+          <f:ResponsiveGridLayout labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" />
+        </f:layout>
+        <f:formContainers>
+            <f:FormContainer>
+                <f:formElements>
+                    <f:FormElement class="sapUiMarginTopBottom">
+                        <form:label>
+                        <Label text="{i18n>lblTemplateId}" design="Standard" width="100%" required="true" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                        </form:label>
+                        <f:fields>
+                        <Input value="{createTemplateModel>/templateId}" width="50%"/>
+                        </f:fields>
+                    </f:FormElement>
+                    <f:FormElement class="sapUiMarginTopBottom">
+                        <form:label>
+                        <Label text="{i18n>lblTemplateDescription}" design="Standard" width="100%" required="true" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                        </form:label>
+                        <f:fields>
+                        <Input value="{createTemplateModel>/templateDescription}" width="50%"/>
+                        </f:fields>
+                    </f:FormElement>
+                </f:formElements>
+            </f:FormContainer>
+        </f:formContainers>
+      </form:Form>
+      <form:Form>
+        <f:layout>
+          <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="3" columnsM="3" singleContainerFullSize="false" />
+        </f:layout>
+        <f:formContainers>
+          <!--Container 1-->
+          <f:FormContainer title="{i18n&gt;lblSectionCoverage}">
+            <f:formElements>
+              <f:FormElement class="sapUiMarginTopBottom">
+                <form:label>
+                  <Label text="{i18n&gt;lblCriteria}" design="Standard" width="100%" required="true" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                </form:label>
+                <f:fields>
+                  <Select visible="true" width="auto" maxWidth="100%" items="{insuranceCriteriaModel&gt;/}" selectedKey="{createTemplateModel>/criteriaKey}" class="myCustomSelect" enabled="{createCatalogItemModel&gt;/isNewArticle}" showSecondaryValues="true">
+                    <items>
+                      <core:ListItem text="{insuranceCriteriaModel&gt;description}" key="{insuranceCriteriaModel&gt;code}" additionalText="{insuranceCriteriaModel&gt;code}" />
+                    </items>
+                  </Select>
+                </f:fields>
+              </f:FormElement>
+              <!--Criteria Start-->
+              <f:FormElement class="sapUiMarginTopBottom">
+                <form:label>
+                  <Label text="{i18n&gt;lblCaseType}" design="Standard" width="100%" required="true" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                </form:label>
+                <f:fields>
+                  <Select visible="true" width="auto" maxWidth="100%" items="{insuranceCaseTypeModel&gt;/}" selectedKey="{createTemplateModel>/caseTypeKey}" class="myCustomSelect" enabled="{createCatalogItemModel&gt;/isNewArticle}" showSecondaryValues="true">
+                    <items>
+                      <core:ListItem text="{insuranceCaseTypeModel&gt;description}" key="{insuranceCaseTypeModel&gt;code}" additionalText="{insuranceCaseTypeModel&gt;code}" />
+                    </items>
+                  </Select>
+                </f:fields>
+              </f:FormElement>
+              <!--Case Type End-->
+              <f:FormElement class="sapUiMarginTopBottom">
+                <form:label>
+                  <Label text="{i18n&gt;lblValue}" design="Standard" width="100%" required="true" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                </form:label>
+                <f:fields>
+                  <Input value="{createTemplateModel>/value}" />
+                </f:fields>
+              </f:FormElement>
+              <f:FormElement class="sapUiMarginTopBottom">
+                <form:label>
+                  <Label text="{i18n&gt;lblCoverage}" design="Standard" width="100%" required="true" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                </form:label>
+                <f:fields>
+                  <HBox>
+                    <items>
+                      <Input type="Number" value="{createTemplateModel>/coverage}" />
+                      <Text text="%" class="blackLabel sapUiTinyMarginTop sapUiTinyMarginBegin"/>
+                    </items>
+                  </HBox>
+                </f:fields>
+              </f:FormElement>
+              <!--Coverage End-->
+            </f:formElements>
+          </f:FormContainer>
+          <!--Container 2-->
+          <f:FormContainer title="{i18n&gt;lblSectionLimits}">
+            <form:formElements>
+              <f:FormElement class="sapUiMarginTopBottom">
+                <form:label>
+                  <Label text="{i18n&gt;lblAmount}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                </form:label>
+                <f:fields>
+                   <HBox>
+                        <items>
+                            <Input type="Number" value="{createTemplateModel>/limitAmount}" />
+                            <Select visible="true" width="auto" maxWidth="100%" items="{insuranceCurrencyModel&gt;/}" selectedKey="{createTemplateModel>/limitAmountKey}" class="myCustomSelect" showSecondaryValues="true">
+                                <items>
+                                  <core:ListItem text="{insuranceCurrencyModel&gt;description}" key="{insuranceCurrencyModel&gt;code}" additionalText="{insuranceCurrencyModel&gt;code}" />
+                                </items>
+                              </Select>
+                        </items>
+                   </HBox> 
+                  
+                </f:fields>
+              </f:FormElement>
+              <f:FormElement class="sapUiMarginTopBottom">
+                <form:label>
+                  <Label text="{i18n&gt;lblQuantity}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                </form:label>
+                <f:fields>
+                  <HBox>
+                    <items>
+                        <Input value="{createTemplateModel>/limitQuantity}" />
+                        <Select visible="true" width="auto" maxWidth="100%" items="{insuranceUOMModel&gt;/}" selectedKey="{createTemplateModel>/limitUnitKey}" class="myCustomSelect" showSecondaryValues="true">
+                            <items>
+                              <core:ListItem text="{insuranceUOMModel&gt;description}" key="{insuranceUOMModel&gt;code}" additionalText="{insuranceUOMModel&gt;code}" />
+                            </items>
+                          </Select>
+                    </items>
+                  </HBox> 
+                </f:fields>
+              </f:FormElement>
+              <!--Quantity End-->
+              <f:FormElement class="sapUiMarginTopBottom">
+                <form:label>
+                  <Label text="{i18n&gt;lblCycleDurationType}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                </form:label>
+                <f:fields>
+                  <HBox>
+                    <items>
+                      <Input value="{createTemplateModel>/cycleDurationType}" type="Number" />
+                      <Select visible="true" width="auto" maxWidth="100%" items="{insuranceCycleDurationModel&gt;/}" selectedKey="{createTemplateModel>/cycleDurationTypeKey}" class="myCustomSelect sapUiSmallMarginBegin" enabled="{createCatalogItemModel&gt;/isNewArticle}" showSecondaryValues="true">
+                        <items>
+                          <core:ListItem text="{insuranceCycleDurationModel&gt;description}" key="{insuranceCycleDurationModel&gt;code}" additionalText="{insuranceCycleDurationModel&gt;code}" />
+                        </items>
+                      </Select>
+                    </items>
+                  </HBox>
+                </f:fields>
+              </f:FormElement>
+            </form:formElements>
+          </f:FormContainer>
+          <!--Container 3-->
+          <f:FormContainer title="{i18n&gt;lblSectionCoPayment}">
+            <form:formElements>
+              <f:FormElement class="sapUiMarginTopBottom">
+                <form:label>
+                  <Label text="{i18n&gt;lblAmount}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true" wrapping="true" class="blackLabel sapUiTinyMarginTop" />
+                </form:label>
+                <f:fields>
+                  <HBox>
+                    <items>
+                      <Input value="{createTemplateModel>/amount}" type="Number" />
+                      <Select visible="true" width="auto" maxWidth="100%" items="{insuranceCurrencyModel&gt;/}" selectedKey="{createTemplateModel>/amountKey}" class="myCustomSelect sapUiSmallMarginBegin" showSecondaryValues="true">
+                        <items>
+                          <core:ListItem text="{insuranceCurrencyModel&gt;description}" key="{insuranceCurrencyModel&gt;code}" additionalText="{insuranceCurrencyModel&gt;code}" />
+                        </items>
+                      </Select>
+                    </items>
+                  </HBox>
+                </f:fields>
+              </f:FormElement>
+            </form:formElements>
+          </f:FormContainer>
+        </f:formContainers>
+      </form:Form>
+      <form:Form>
+        <f:title>
+          <core:Title text="{i18n&gt;lblSectionConfiguration}" />
+        </f:title>
+        <f:layout>
+          <f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" />
+        </f:layout>
+        <f:formContainers>
+          <f:FormContainer>
+            <f:formElements>
+              <f:FormElement>
+                <table:Table selectionMode="None" showColumnVisibilityMenu="false" rows="{createTemplateModel>/detailConfiguration}" fixedColumnCount="2" rowActionCount="1">
+                  <table:extension>
+                    <OverflowToolbar class="Clear">
+                      <ToolbarSpacer width="" />
+                      <OverflowToolbarButton tooltip="Add New" type="Transparent" text="Add New" icon="sap-icon://add" press="_onAddDetailConfigurationTemplate"/>
+                    </OverflowToolbar>
+                  </table:extension>
+                  <table:columns>
+                    <table:Column width="15rem">
+                      <Label text="{i18n&gt;lblCriteria}" design="Bold" />
+                      <table:template>
+                        <Select visible="true" width="auto" maxWidth="100%" items="{insuranceCriteriaModel&gt;/}" selectedKey="{createTemplateModel>detailConfigCriteriaKey}" class="myCustomSelect" showSecondaryValues="true" enabled="{=${viewModel&gt;/isItemEdit} === true ? true : false}">
+                          <items>
+                            <core:ListItem text="{insuranceCriteriaModel&gt;description}" key="{insuranceCriteriaModel&gt;code}" additionalText="{insuranceCriteriaModel&gt;code}" />
+                          </items>
+                        </Select>
+                      </table:template>
+                    </table:Column>
+                    <table:Column width="15rem">
+                      <Label text="{i18n&gt;lblValue}" design="Bold" />
+                      <table:template>
+                        <Input value="{createTemplateModel&gt;detailConfigValue}" type="Text"/>
+                      </table:template>
+                    </table:Column>
+                    <table:Column width="12rem">
+                      <Label text="{i18n&gt;lblQuantity}" design="Bold" />
+                      <table:template>
+                        <Input value="{createTemplateModel&gt;detailConfigQuantity}" type="Number" />
+                      </table:template>
+                    </table:Column>
+                    <table:Column width="12rem">
+                      <Label text="{i18n&gt;lblUnit}" design="Bold" />
+                      <table:template>
+                        <Select visible="true" width="auto" maxWidth="100%" items="{insuranceUOMModel&gt;/}" selectedKey="{createTemplateModel&gt;detailConfigUnit}" class="myCustomSelect" showSecondaryValues="true">
+                          <items>
+                            <core:ListItem text="{insuranceUOMModel&gt;description}" key="{insuranceUOMModel&gt;code}" additionalText="{insuranceUOMModel&gt;code}" />
+                          </items>
+                        </Select>
+                      </table:template>
+                    </table:Column>
+                    <table:Column width="10rem">
+                      <Label text="{i18n&gt;lblAmount}" design="Bold" />
+                      <table:template>
+                        <Input value="{createTemplateModel&gt;detailConfigAmount}" type="Number"/>
+                      </table:template>
+                    </table:Column>
+                    <table:Column width="8rem">
+                      <Label text="{i18n&gt;lblCurrency}" design="Bold" />
+                      <table:template>
+                        <Select visible="true" width="auto" maxWidth="100%" items="{insuranceCurrencyModel&gt;/}" selectedKey="{createTemplateModel&gt;detailConfigCurrency}" class="myCustomSelect" showSecondaryValues="true" enabled="{=${viewModel&gt;/isItemEdit} === true ? true : false}">
+                          <items>
+                            <core:ListItem text="{insuranceCurrencyModel&gt;description}" key="{insuranceCurrencyModel&gt;code}" additionalText="{insuranceCurrencyModel&gt;code}" />
+                          </items>
+                        </Select>
+                      </table:template>
+                    </table:Column>
+                    <table:Column width="8rem">
+                      <Label text="{i18n&gt;lblCycle}" design="Bold" />
+                      <table:template>
+                        <Input value="{createTemplateModel&gt;detailConfigCycleDuration}" type="Number" />
+                      </table:template>
+                    </table:Column>
+                    <table:Column width="8rem">
+                      <Label text="{i18n&gt;lblCycleDuration}" design="Bold" />
+                      <table:template>
+                        <Select visible="true" width="auto" maxWidth="100%" items="{insuranceCycleDurationModel&gt;/}" selectedKey="{createTemplateModel&gt;detailConfigCycleDurationType}" class="myCustomSelect" showSecondaryValues="true">
+                          <items>
+                            <core:ListItem text="{insuranceCycleDurationModel&gt;description}" key="{insuranceCycleDurationModel&gt;code}" additionalText="{insuranceCycleDurationModel&gt;code}" />
+                          </items>
+                        </Select>
+                      </table:template>
+                    </table:Column>
+                  </table:columns>
+                  <table:rowActionTemplate>
+                    <table:RowAction visible="true">
+                      <table:items>
+                        <table:RowActionItem type="Delete" press="_onDeleteDetailConfig" text="Delete" icon="sap-icon://delete" />
+                      </table:items>
+                    </table:RowAction>
+                  </table:rowActionTemplate>
+                </table:Table>
+              </f:FormElement>
+            </f:formElements>
+          </f:FormContainer>
+        </f:formContainers>
+      </form:Form>
+    </content>
+    <buttons>
+      <Button type="Emphasized" text="{i18n&gt;lblBtnSaveTemplate}" press="_onSaveTemplate" />
+      <Button type="Default" text="{i18n&gt;lblButtonCancel}" press="_onCancelDialog" />
+    </buttons>
+  </Dialog>
+</core:FragmentDefinition>

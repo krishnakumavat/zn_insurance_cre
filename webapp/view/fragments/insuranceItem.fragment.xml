@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core"
+	xmlns:form="sap.ui.layout.form" xmlns:uxap="sap.uxap">
+	<VBox height="100%">
+		<items>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type="Emphasized" icon="sap-icon://add" iconFirst="true"  press="_onAddNewItem" 
+				visible="{= ${insuranceDetailModel>isEdit} === true}"/>
+			</OverflowToolbar>
+			<List items="{insuranceDetailModel>planItems}">
+				<items>
+					<CustomListItem>
+						<Panel expandable="true" expanded="false" headerText="{insuranceDetailModel>Description}" class="myPanelHeader">
+							<content>
+								<core:Fragment fragmentName="zninsurancecre.view.fragments.insuranceItemDetail" type="XML"></core:Fragment>
+							</content>
+						</Panel>	
+					</CustomListItem>	
+				</items>	
+			</List>	
+		</items>	
+	</VBox>	
+</core:FragmentDefinition>

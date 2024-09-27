@@ -1,0 +1,100 @@
+<!--<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:form="sap.ui.layout.form" xmlns:f="sap.ui.layout.form">-->
+    <core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc" 
+                             xmlns="sap.m" 
+                             xmlns:form="sap.ui.layout.form" 
+                             xmlns:f="sap.ui.layout.form"
+	                         xmlns:core="sap.ui.core">
+	<form:Form width="100%" editable="true" visible="true">
+		<form:layout>
+			<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="4" columnsM="2" labelSpanM="4" labelSpanS="12"/>
+		</form:layout>
+		<form:formContainers>
+			<!--Column One-->
+			<form:FormContainer>
+				<form:formElements>
+					<!--Insurance Validity Start-->
+					<!--To show in display mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblValidity}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>planDetails/0/validFrom} - {insuranceDetailModel>planDetails/0/validTo}" visible="{= ${insuranceDetailModel>isEdit} === false}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<!--To show in edit mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblValidity}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<DateRangeSelection 
+							displayFormat="dd.MM.yyyy" 
+							from="{insuranceDetailModel>planDetails/0/Datefrom}"
+							to="{insuranceDetailModel>planDetails/0/Dateto}" change="_onInsuranceHeaderDateChange"></DateRangeSelection>
+						</f:fields>
+					</f:FormElement>
+
+					
+
+					<f:FormElement class="sapUiMarginTopBottom">
+						<form:label>
+							<Label text="{i18n>lblSharedFamilyLimit}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit"
+								visible="true" wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+                            <CheckBox selected="{insuranceDetailModel>planDetails/0/PlanFamily}" editable="{=${insuranceDetailModel>isEdit} === true ? true : false}"></CheckBox>
+						</f:fields>
+					</f:FormElement>
+					
+				</form:formElements>
+			</form:FormContainer>
+			<!--Column Two-->
+			<form:FormContainer>
+				<form:formElements>
+					<!--Header Limit Start-->
+					<!--To show in display mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === false}">
+						<form:label>
+							<Label text="{i18n>lblHeaderLimit}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>planDetails/0/PlanHdrLimit} {insuranceDetailModel>planDetails/0/PlanHdrLimitCuky}"></Text>
+						</f:fields>
+					</f:FormElement>
+					<!--To show in edit mode-->
+					<f:FormElement class="sapUiMarginTopBottom" visible="{= ${insuranceDetailModel>isEdit} === true}">
+						<form:label>
+							<Label text="{i18n>lblHeaderLimit}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<HBox>
+								<items>
+									<Input value="{insuranceDetailModel>planDetails/0/PlanHdrLimit}" type="Number"></Input>
+									<Input value="{insuranceDetailModel>planDetails/0/PlanHdrLimitCuky}" type="Text" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="_onCurrencyValueHelp"></Input>
+								</items>
+							</HBox>
+							
+						</f:fields>
+					</f:FormElement>
+					<!--Header Limit End-->
+					
+					<f:FormElement class="sapUiMarginTopBottom">
+						<form:label>
+							<Label text="{i18n>lblPlanVersion}" design="Standard" width="100%" required="false" textAlign="Center" textDirection="Inherit" visible="true"
+								wrapping="true" class="blackLabel"/>
+						</form:label>
+						<f:fields>
+							<Text text="{insuranceDetailModel>planDetails/0/PlanVersion}"></Text>
+						</f:fields>
+					</f:FormElement>
+				</form:formElements>
+			</form:FormContainer>
+		</form:formContainers>
+	</form:Form>
+</core:FragmentDefinition>
+<!--</mvc:View>-->
