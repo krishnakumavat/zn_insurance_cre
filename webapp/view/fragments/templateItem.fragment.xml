@@ -156,14 +156,11 @@
 								wrapping="true" class="blackLabel sapUiTinyMarginTop sapUiTinyMarginBegin"/>
 								</form:label>
 								<f:fields>
-									<HBox>
+									<HBox alignItems="Stretch">
 										<items>
-											<Input type="Text" value="{insuranceTemplateModel>/to_PlanTplLimits/LimitCurr}" width="auto"></Input>
-											<Select visible="true" width="auto" maxWidth="100%" items="{insuranceCurrencyModel&gt;/}" selectedKey="{insuranceTemplateModel>/to_PlanTplLimits/LimitCuky}" class="myCustomSelect" showSecondaryValues="true">
-												<items>
-												  <core:ListItem text="{insuranceCurrencyModel&gt;description}" key="{insuranceCurrencyModel&gt;code}" additionalText="{insuranceCurrencyModel&gt;code}" />
-												</items>
-											  </Select>
+											<Input value="{insuranceTemplateModel>/to_PlanTplLimits/LimitCurr}" type="Number" enableTableAutoPopinMode="true" width="300%"></Input>
+											<Input value="{insuranceTemplateModel>/to_PlanTplLimits/LimitCuky}" type="Text" enableTableAutoPopinMode="true" width="100%" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="_onCurrencyValueHelpTemplate"></Input>
+											
 										</items>
 								   </HBox> 
 									
@@ -188,8 +185,8 @@
 								<f:fields>
 									<HBox>
 										<items>
-											<Input value="{insuranceTemplateModel>/to_PlanTplLimits/LimitQuan}" width="auto"/>
-											<Select visible="true" width="auto" maxWidth="100%" items="{insuranceUOMModel&gt;/}" selectedKey="{insuranceTemplateModel>/to_PlanTplLimits/LimitUnit}" class="myCustomSelect" showSecondaryValues="true">
+											<Input value="{insuranceTemplateModel>/to_PlanTplLimits/LimitQuan}" width="100%"/>
+											<Select visible="true" width="auto" items="{insuranceUOMModel&gt;/}" selectedKey="{insuranceTemplateModel>/to_PlanTplLimits/LimitUnit}" class="myCustomSelect" showSecondaryValues="true">
 												<items>
 												  <core:ListItem text="{insuranceUOMModel&gt;description}" key="{insuranceUOMModel&gt;code}" additionalText="{insuranceUOMModel&gt;code}" />
 												</items>
@@ -252,10 +249,10 @@
 								wrapping="true" class="blackLabel sapUiTinyMarginTop"/>
 								</form:label>
 								<f:fields>
-									<HBox>
+									<HBox alignItems="Center">
 										<items>
-											<Input value="{insuranceTemplateModel>/to_PlanTplCopay/Copay}" type="Number" width="auto" ></Input>
-											<Input value="{insuranceTemplateModel>/to_PlanTplCopay/CopayCurr}" width="auto" type="Text" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="_onCurrencyValueHelpItem"></Input>
+											<Input value="{insuranceTemplateModel>/to_PlanTplCopay/Copay}" type="Number" width="200%" ></Input>
+											<Input value="{insuranceTemplateModel>/to_PlanTplCopay/CopayCurr}" width="100%" type="Text" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="_onCurrencyValueHelpTemplate"></Input>
 										</items>
 									</HBox>
 								</f:fields>

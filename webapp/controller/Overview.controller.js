@@ -850,6 +850,23 @@ sap.ui.define([
                 oController.valueHelpKey = "CURRENCYITEM";
                 that._getValueHelpFragment(that.getView().getModel("insuranceCurrencyModel").getData(), oBundle.getText("lblSelectCurrency")).open();
             },
+
+            _onCurrencyValueHelpTemplate: function (oEvent) {
+                let that = this;
+                let oBundle = oController.getView().getModel("i18n").getResourceBundle();
+                let _object = that.getView().getModel("insuranceTemplateModel").getData();
+                oController.dataObject = _object;
+                console.log(_object);
+                if(oEvent.getSource().getBindingInfo("value").binding.sPath === "/to_PlanTplCopay/CopayCurr") {
+                    oController.valueHelpKey = "CURRENCYCOPAY"
+                } else if (oEvent.getSource().getBindingInfo("value").binding.sPath === "/to_PlanTplLimits/LimitCuky"){
+                    oController.valueHelpKey = "CURRENCYLIMITS"
+                }
+                that._getValueHelpFragment(that.getView().getModel("insuranceCurrencyModel").getData(), oBundle.getText("lblSelectCurrency")).open();
+            },
+
+            
+
             _onSelectValueHelp: function (oEvent) {
                 let that = this;
                 if (_.find(that.getView().getModel("insuranceDetailModel").getData(), { "PlanId": oController.dataObject["PlanId"] })) {
@@ -865,8 +882,26 @@ sap.ui.define([
                             //["planItems"][0]["PlanHdrLimitCuky"] = oEvent.getParameter("selectedItem").getTitle();
                             break;
                     }
+                } else if ( that.getView().getModel("insuranceTemplateModel").getData()["PlanTplId"] === oController.dataObject["PlanTplId"] ){
+                    switch (oController.valueHelpKey) {
+                        case "CURRENCYLIMITS":
+                            let _headerObj1 = that.getView().getModel("insuranceTemplateModel").getData();
+                            if (_headerObj1) {
+                                _headerObj1["to_PlanTplLimits"]["LimitCuky"] = oEvent.getParameter("selectedItem").getTitle();
+                            }
+                            break;
+                        case "CURRENCYCOPAY":
+                            let _headerObj = that.getView().getModel("insuranceTemplateModel").getData();
+                            if (_headerObj) {
+                                _headerObj["to_PlanTplCopay"]["CopayCurr"] = oEvent.getParameter("selectedItem").getTitle();
+                            }
+                            //["planItems"][0]["PlanHdrLimitCuky"] = oEvent.getParameter("selectedItem").getTitle();
+                            break;
+                    }
+
                 }
                 that.getView().getModel("insuranceDetailModel").updateBindings();
+                that.getView().getModel("insuranceTemplateModel").updateBindings();
             },
             _onSelectTemplates: function (oEvent) {
                 let that = this;
@@ -889,6 +924,7 @@ sap.ui.define([
                             _obj["isEdit"] = false;
                             _obj["isModified"] = false;
                             _obj["isNew"] = true;
+                            _obj["PlanVersion"] = oController.headerObject["planDetails"][0]["PlanVersion"]
                             _obj["createdOn"] = moment(new Date()).format("DD.MM.YYYY");
                             _obj["createdAt"] = moment(new Date()).format("HH:MM A");
                             _obj["to_PlanCoverage"]["CritText"] = _.find(that.getView().getModel("insuranceCriteriaModel").getData(), { "code": UIHelper.padWithZeros(_obj["to_PlanCoverage"]["Crit"], 2) }) ?
@@ -1577,7 +1613,7 @@ sap.ui.define([
 
                                 //let _planConfiguration = _.cloneDeep(_itemObj)[""]
 
-                                that._addItem("/xSMYxC_PLAN", _headerObj, 'to_PlanItem', _itemTempObj, false)
+                                that._addItem("/xSMYxC_INS_PLAN_VRS", _headerObj, 'to_PlanItem', _itemTempObj, false)
                                 // that._callUpdateOperation(_itemTempObj, _itemTempObj["__metadata"]["etag"], false),
                                 //     that._callUpdateOperation(_coPayObj, _coPayObj["__metadata"]["etag"], false),
                                 //     that._callUpdateOperation(_coverageObj, _coverageObj["__metadata"]["etag"], false),
@@ -1748,7 +1784,7 @@ sap.ui.define([
                         _sPath = _sPath + "/" + property
                     }
                     else {
-                        _sPath = parentObj["__metadata"]["uri"].split("/")[parentObj["__metadata"]["uri"].split("/").length - 1];
+                        _sPath = colllection + "(Org='" + parentObj["Org"] + "',PlanId='" +  parentObj["PlanId"] + "',PlanVersion='" + itemObj["PlanVersion"] + "')"
                         _sPath = _sPath + "/" + property
                     }
 
@@ -1756,7 +1792,29 @@ sap.ui.define([
                     oModel.setHeaders({
                         "X-Requested-With": "XMLHttpRequest"
                     });
-                    oModel.create(_sPath, itemObj, {
+                    var itemObjPayload = {
+                        "Description" : itemObj["Description"],
+                        "to_PlanCopay" : {
+                          "Copay" : itemObj["to_PlanTplCopay"]["Copay"],
+                          "CopayCurr" : itemObj["to_PlanTplCopay"]["CopayCurr"]
+                        },
+                        "to_PlanCoverage" : {
+                          "Crit" : itemObj["to_PlanTplCoverage"]["Crit"],
+                          "Val" : itemObj["to_PlanTplCoverage"]["Val"],
+                          "CaseType" : itemObj["to_PlanTplCoverage"]["CaseType"],
+                          "Coverage" : itemObj["to_PlanTplCoverage"]["Coverage"],
+                        },
+                        "to_PlanLimits" : {
+                          "LimitCurr" : itemObj["to_PlanTplLimits"]["LimitCurr"],
+                          "LimitCuky" : itemObj["to_PlanTplLimits"]["LimitCuky"],
+                          "LimitQuan" : itemObj["to_PlanTplLimits"]["LimitQuan"],
+                          "LimitUnit" : itemObj["to_PlanTplLimits"]["LimitUnit"],
+                          "CycleDur" : itemObj["to_PlanTplLimits"]["CycleDur"],
+                          "CycleDurType" : itemObj["to_PlanTplLimits"]["CycleDurType"],
+                      }
+                  }
+
+                    oModel.create(_sPath, itemObjPayload, {
                         success: function (oResponse) {
                             fnResolve(oResponse);
                         },
